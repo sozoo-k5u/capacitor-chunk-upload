@@ -45,7 +45,7 @@ public class ChunkUploadPlugin extends Plugin {
             }
             Map<String, String> headers = new HashMap<String, String>();
             JSObject headersObject = call.getObject("headers");
-            for (Iterator<String> it = headersObject.keys(); it.hasNext();) {
+            for (Iterator<String> it = headersObject.keys(); it.hasNext(); ) {
                 String key = it.next();
                 String value = headersObject.getString(key);
                 headers.put(key, value);

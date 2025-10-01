@@ -15,8 +15,8 @@ npx cap sync
 
 * [`echo(...)`](#echo)
 * [`uploadFile(...)`](#uploadfile)
-* [`addListener('uploadStarted', ...)`](#addlisteneruploadstarted)
-* [`addListener('uploadProgressChanged', ...)`](#addlisteneruploadprogresschanged)
+* [`addListener('uploadStarted', ...)`](#addlisteneruploadstarted-)
+* [`addListener('uploadProgressChanged', ...)`](#addlisteneruploadprogresschanged-)
 * [`removeAllListeners()`](#removealllisteners)
 * [Interfaces](#interfaces)
 

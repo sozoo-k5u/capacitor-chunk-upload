@@ -9,10 +9,7 @@ export interface ChunkUploadPlugin {
   /**
    * Listens for event: upload started
    */
-  addListener(
-    eventName: 'uploadStarted',
-    listenerFunc: () => void,
-  ): Promise<PluginListenerHandle>;
+  addListener(eventName: 'uploadStarted', listenerFunc: () => void): Promise<PluginListenerHandle>;
   /**
    * Listens for event: upload progress changed
    */

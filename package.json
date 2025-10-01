@@ -1,54 +1,54 @@
 {
-  "description" : "Chunk upload for iOS, Android, and web",
-  "types" : "dist/esm/index.d.ts",
-  "repository" : {
-    "type" : "git",
-    "url" : "git+https://github.com/sozoo-k5u/capacitor-chunk-upload.git"
+  "description": "Chunk upload for iOS, Android, and web",
+  "types": "dist/esm/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sozoo-k5u/capacitor-chunk-upload.git"
   },
-  "keywords" : [
+  "keywords": [
     "capacitor",
     "plugin",
     "native"
   ],
-  "bugs" : {
-    "url" : "https://github.com/sozoo-k5u/capacitor-chunk-upload/issues"
+  "bugs": {
+    "url": "https://github.com/sozoo-k5u/capacitor-chunk-upload/issues"
   },
-  "peerDependencies" : {
-    "@capacitor/core" : "^6.0.0"
+  "peerDependencies": {
+    "@capacitor/core": ">=7.0.0"
   },
-  "module" : "dist/esm/index.js",
-  "prettier" : "@ionic/prettier-config",
-  "author" : "Sozoo Studio",
-  "license" : "MIT",
-  "capacitor" : {
-    "android" : {
-      "src" : "android"
+  "module": "dist/esm/index.js",
+  "prettier": "@ionic/prettier-config",
+  "author": "Sozoo Studio",
+  "license": "MIT",
+  "capacitor": {
+    "android": {
+      "src": "android"
     },
-    "ios" : {
-      "src" : "ios"
+    "ios": {
+      "src": "ios"
     }
   },
-  "eslintConfig" : {
-    "extends" : "@ionic/eslint-config/recommended"
+  "eslintConfig": {
+    "extends": "@ionic/eslint-config/recommended"
   },
-  "devDependencies" : {
-    "@ionic/prettier-config" : "^1.0.1",
-    "@ionic/swiftlint-config" : "^1.1.2",
-    "@capacitor/ios" : "^6.0.0",
-    "@capacitor/docgen" : "^0.0.18",
-    "rollup" : "^2.32.0",
-    "prettier-plugin-java" : "~1.0.2",
-    "swiftlint" : "^1.0.1",
-    "@capacitor/android" : "^6.0.0",
-    "@capacitor/core" : "^6.0.0",
-    "typescript" : "~4.1.5",
-    "@ionic/eslint-config" : "^0.4.0",
-    "prettier" : "~2.3.0",
-    "rimraf" : "^3.0.2",
-    "eslint" : "^8.57.0"
+  "devDependencies": {
+    "@ionic/prettier-config": "^4.0.0",
+    "@ionic/swiftlint-config": "^2.0.0",
+    "@capacitor/ios": "^7.4.3",
+    "@capacitor/docgen": "^0.3.0",
+    "rollup": "^4.30.1",
+    "prettier-plugin-java": "^2.6.6",
+    "swiftlint": "^2.0.0",
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "typescript": "~4.1.5",
+    "@ionic/eslint-config": "^0.4.0",
+    "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
+    "eslint": "^8.57.0"
   },
-  "version" : "1.0.0",
-  "files" : [
+  "version": "1.0.0",
+  "files": [
     "android/src/main/",
     "android/build.gradle",
     "dist/",
@@ -57,25 +57,25 @@
     "ios/Tests",
     "Package.swift"
   ],
-  "swiftlint" : "@ionic/swiftlint-config",
-  "unpkg" : "dist/plugin.js",
-  "main" : "dist/plugin.cjs.js",
-  "name" : "capacitor-chunk-upload",
-  "scripts" : {
-    "fmt" : "npm run clean:android && npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --fix --format",
-    "verify:android" : "cd android && ./gradlew clean build test && cd ..",
-    "clean" : "rimraf ./dist",
-    "clean:android" : "cd android && ./gradlew clean && cd ..",
-    "lint" : "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
-    "verify:web" : "npm run build",
-    "verify" : "npm run verify:ios && npm run verify:android && npm run verify:web",
-    "swiftlint" : "node-swiftlint ios/Sources/",
-    "docgen" : "docgen --api ChunkUploadPlugin --output-readme README.md --output-json dist/docs.json",
-    "watch" : "tsc --watch",
-    "prepublishOnly" : "npm run build",
-    "verify:ios" : "xcodebuild -scheme CapacitorChunkUpload -destination generic/platform=iOS",
-    "prettier" : "prettier \"**/*.{css,html,ts,js,java}\" \"!android/build/**\" \"!**/node_modules/**\"",
-    "build" : "npm run clean && npm run docgen && tsc && rollup -c rollup.config.js",
-    "eslint" : "eslint src/ --ext ts --ignore-path .eslintignore"
+  "swiftlint": "@ionic/swiftlint-config",
+  "unpkg": "dist/plugin.js",
+  "main": "dist/plugin.cjs.js",
+  "name": "capacitor-chunk-upload",
+  "scripts": {
+    "fmt": "npm run clean:android && npm run eslint -- --fix && npm run prettier -- --write && npm run swiftlint -- --fix --format",
+    "verify:android": "cd android && ./gradlew clean build test && cd ..",
+    "clean": "rimraf ./dist",
+    "clean:android": "cd android && ./gradlew clean && cd ..",
+    "lint": "npm run eslint && npm run prettier -- --check && npm run swiftlint -- lint",
+    "verify:web": "npm run build",
+    "verify": "npm run verify:ios && npm run verify:android && npm run verify:web",
+    "swiftlint": "node-swiftlint ios/Sources/",
+    "docgen": "docgen --api ChunkUploadPlugin --output-readme README.md --output-json dist/docs.json",
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build",
+    "verify:ios": "xcodebuild -scheme CapacitorChunkUpload -destination generic/platform=iOS",
+    "prettier": "prettier \"**/*.{css,html,ts,js,java}\" --plugin=prettier-plugin-java \"!android/build/**\" \"!**/node_modules/**\"",
+    "build": "npm run clean && npm run docgen && tsc && rollup -c rollup.config.mjs",
+    "eslint": "eslint src/ --ext ts --ignore-path .eslintignore"
   }
 }
