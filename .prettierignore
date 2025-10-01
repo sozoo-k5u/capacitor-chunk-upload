@@ -1,0 +1,18 @@
+# Build directories
+android/build/
+android/.gradle/
+ios/build/
+dist/
+node_modules/
+
+# Generated files
+*.min.js
+*.min.css
+
+# Test reports
+**/build/reports/
+**/build/test-results/
+
+# Package files
+package-lock.json
+*.log

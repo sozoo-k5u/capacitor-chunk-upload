@@ -1,4 +1,4 @@
-import { PluginListenerHandle } from '@capacitor/core';
+import type { PluginListenerHandle } from '@capacitor/core';
 
 export interface ChunkUploadPlugin {
   echo(options: { value: string }): Promise<{ value: string }>;
@@ -12,14 +12,14 @@ export interface ChunkUploadPlugin {
   addListener(
     eventName: 'uploadStarted',
     listenerFunc: () => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
   /**
    * Listens for event: upload progress changed
    */
   addListener(
     eventName: 'uploadProgressChanged',
     listenerFunc: (progress: { percentage: number }) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
 
   /**
    * Removes all listeners

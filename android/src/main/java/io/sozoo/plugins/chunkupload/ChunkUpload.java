@@ -1,11 +1,7 @@
-
 package io.sozoo.plugins.chunkupload;
 
 import android.util.Base64;
 import android.util.Log;
-
-import org.json.JSONArray;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
@@ -17,22 +13,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import org.json.JSONArray;
 
 public class ChunkUpload {
+
     private String TAG = "CAPACITOR_CHUNK_UPLOAD";
 
     public String echo(String value) {
         Log.i("Echo", value);
         return value;
     }
+
     public void uploadFile(
-            BufferedInputStream inputStream,
-            String url,
-            Map<String,String> headers,
-            UploadFileResultCallback uploadFileCallback
+        BufferedInputStream inputStream,
+        String url,
+        Map<String, String> headers,
+        UploadFileResultCallback uploadFileCallback
     ) {
         List<String> blockIds = new ArrayList<>();
-        final int MAX_SUB_SIZE = 1024 * 1024;// 4194304; // 4*1024*1024 == 4MB
+        final int MAX_SUB_SIZE = 1024 * 1024; // 4194304; // 4*1024*1024 == 4MB
         try {
             long fileSize = inputStream.available();
             int totalChunks = (int) Math.ceil((double) fileSize / MAX_SUB_SIZE);
@@ -63,14 +62,13 @@ public class ChunkUpload {
                 }
                 // Handle the server response if needed
                 int responseCode = connection.getResponseCode();
-                chunk +=1;
+                chunk += 1;
                 if (responseCode >= 200 && responseCode < 300) {
                     connection.disconnect();
                     double progressPercentage = (double) ((chunk * 100) / totalChunks);
                     // The request was successful
                     Log.d(TAG, "Chunk " + chunk + " uploaded successfully with response code: " + responseCode);
                     uploadFileCallback.progress(progressPercentage);
-
                 } else {
                     connection.disconnect();
                     // The request failed, handle the error
@@ -78,21 +76,21 @@ public class ChunkUpload {
                     return;
                 }
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
         //commit the changes, //todo could be an option?
         String commitChunksUri = url + "&comp=blocklist";
-        commitChunks(commitChunksUri,blockIds, headers);
+        commitChunks(commitChunksUri, blockIds, headers);
         uploadFileCallback.success();
-
     }
+
     private String generateRandomId() {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
-    private static void commitChunks(String apiUrl, List<String> chunkIds, Map<String,String> headers) {
+
+    private static void commitChunks(String apiUrl, List<String> chunkIds, Map<String, String> headers) {
         try {
             // Create a new URL connection for the commit operation
             HttpURLConnection connection = (HttpURLConnection) new URL(apiUrl).openConnection();
@@ -129,5 +127,4 @@ public class ChunkUpload {
             e.printStackTrace();
         }
     }
-
 }

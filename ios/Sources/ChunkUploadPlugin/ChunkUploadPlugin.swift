@@ -6,19 +6,20 @@ import Capacitor
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 @objc(ChunkUploadPlugin)
-public class ChunkUploadPlugin: CAPPlugin , CAPBridgedPlugin {
-    public var identifier: String = "ChunkUpload"
-    
-    public var jsName: String = "ChunkUpload"
-    
+public class ChunkUploadPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "ChunkUploadPlugin"
+    public let jsName = "ChunkUpload"
     public let pluginMethods: [CAPPluginMethod] = [
-            CAPPluginMethod(name: "upload", returnType: CAPPluginReturnPromise),
-        ]
-    
+        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "removeAllListeners", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "addListener", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "uploadFile", returnType: CAPPluginReturnPromise)
+    ]
+
     public let errorUnknown = "An unknown error occurred."
     public let errorUrlMissing = "Url must be provided."
     public let errorPathMissing = "File path must be provided."
-    
+
     private let implementation = ChunkUpload()
 
     override public func load() {
@@ -39,23 +40,23 @@ public class ChunkUploadPlugin: CAPPlugin , CAPBridgedPlugin {
             call.reject(errorPathMissing)
             return
         }
-        let headers = call.getObject("headers") as? NSDictionary ?? [:];
-        notifyListeners("uploadStarted",data: [:]);
+        let headers = call.getObject("headers") as? NSDictionary ?? [:]
+        notifyListeners("uploadStarted", data: [:])
         implementation.uploadFile(
             path: path,
             url: url,
             headers: headers,
             onProgress: { percentage in
-                self.notifyListeners("uploadProgressChanged",data: ["percentage": percentage]);
+                self.notifyListeners("uploadProgressChanged", data: ["percentage": percentage])
             },
             onComplete: { errorMessage in
                 if let errorMessage = errorMessage {
                     call.reject(errorMessage)
                     return
                 }
-                call.resolve([:]);
+                call.resolve([:])
             }
-        );
-        
+        )
+
     }
 }

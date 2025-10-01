@@ -6,16 +6,16 @@ import Foundation
         return value
     }
     @objc public func uploadFile(path: String,
-        url: String,
-        headers: NSDictionary,
-        onProgress: @escaping (Double) -> Void,
-        onComplete: @escaping(String?) -> Void
-        ) -> Void {
+                                 url: String,
+                                 headers: NSDictionary,
+                                 onProgress: @escaping (Double) -> Void,
+                                 onComplete: @escaping (String?) -> Void
+    ) {
 
-        let filePath = URL(string: path)?.path ?? "";
+        let filePath = URL(string: path)?.path ?? ""
         guard let fileData = FileManager.default.contents(atPath: filePath) else {
             onComplete("Failed to load file at path: \(filePath)")
-            return ;
+            return
         }
         // Array to store chunk IDs
         var chunkIds: [String] = []
@@ -37,33 +37,33 @@ import Foundation
             // Upload chunk
             self.uploadChunk(chunk: chunk, url: uploadChunkUrl, headers: headers) { (error) in
                 if let error = error {
-                    //print("Failed to upload chunk: \(error)")
+                    // print("Failed to upload chunk: \(error)")
                     onComplete("Failed to upload chunk : \(error)")
                     return
                 } else {
-                    //=>> seem incorrect here, i goes wrong order
-                    print(i);
-                    print(totalChunks);
-                    //calculate percentage of chunks processed
+                    // =>> seem incorrect here, i goes wrong order
+                    print(i)
+                    print(totalChunks)
+                    // calculate percentage of chunks processed
                     let percentage = Double((Double(i + 1) / Double(totalChunks)) * 100)
-                    onProgress(percentage);
+                    onProgress(percentage)
                     dispatchGroup.leave()
                 }
             }
         }
-        //commit the block ids
+        // commit the block ids
         dispatchGroup.notify(queue: .main) {
             let commitChunksUrl = URL(string: "\(url)&comp=blocklist")!
-            //commit chunk
+            // commit chunk
             self.commitChunks(blockIds: chunkIds, url: commitChunksUrl, headers: headers) { (error) in
                 if let error = error {
                     onComplete("Failed to commit chunks: \(error)")
                 } else {
-                    onComplete(nil);
+                    onComplete(nil)
                 }
             }
         }
-        return ;
+        return
     }
 
     private func uploadChunk(chunk: Data, url: URL, headers: NSDictionary, completion: @escaping (Error?) -> Void) {
@@ -78,7 +78,7 @@ import Foundation
         // Set HTTP body
         request.httpBody = chunk
         // Create URL session and upload chunk
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (_, _, error) in
             if let error = error {
                 print("Failed to upload chunk: \(error)")
                 completion(error)
@@ -89,8 +89,8 @@ import Foundation
         }
         task.resume()
     }
-    
-    private func commitChunks(blockIds: [String], url: URL, headers: NSDictionary, completion: @escaping (Error?) -> Void){
+
+    private func commitChunks(blockIds: [String], url: URL, headers: NSDictionary, completion: @escaping (Error?) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         // Add headers
@@ -99,21 +99,21 @@ import Foundation
                 request.addValue(value, forHTTPHeaderField: key)
             }
         }
-        
+
         // Set HTTP body
         let chunkIdsData = try? JSONEncoder().encode(blockIds)
         request.httpBody = chunkIdsData
         // Create URL session and post chunk IDs
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: request) { (_, _, error) in
             if let error = error {
                 print("Failed to post chunk IDs: \(error)")
-                completion(error);
+                completion(error)
             } else {
                 print("Chunk IDs posted successfully")
-                completion(nil);
+                completion(nil)
             }
         }
-        
+
         task.resume()
     }
 }

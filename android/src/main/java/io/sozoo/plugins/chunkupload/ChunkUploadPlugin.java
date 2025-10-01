@@ -1,7 +1,6 @@
 package io.sozoo.plugins.chunkupload;
 
 import android.net.Uri;
-
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Logger;
 import com.getcapacitor.Plugin;
@@ -15,6 +14,7 @@ import java.util.Map;
 
 @CapacitorPlugin(name = "ChunkUpload")
 public class ChunkUploadPlugin extends Plugin {
+
     public static final String TAG = "ChunkUpload";
     public static final String ERROR_PATH_MISSING = "path must be provided.";
     public static final String ERROR_URL_MISSING = "url must be provided.";
@@ -32,7 +32,7 @@ public class ChunkUploadPlugin extends Plugin {
 
     @PluginMethod
     public void uploadFile(PluginCall call) {
-        try{
+        try {
             String url = call.getString("url");
             if (url == null) {
                 call.reject(ERROR_URL_MISSING);
@@ -43,38 +43,40 @@ public class ChunkUploadPlugin extends Plugin {
                 call.reject(ERROR_PATH_MISSING);
                 return;
             }
-            Map<String,String> headers =  new HashMap<String,String>();
+            Map<String, String> headers = new HashMap<String, String>();
             JSObject headersObject = call.getObject("headers");
-            for (Iterator<String> it = headersObject.keys(); it.hasNext(); ) {
+            for (Iterator<String> it = headersObject.keys(); it.hasNext();) {
                 String key = it.next();
                 String value = headersObject.getString(key);
-                headers.put(key,value);
+                headers.put(key, value);
             }
             JSObject dumpDict = new JSObject();
-            notifyListeners("uploadStarted",dumpDict);
+            notifyListeners("uploadStarted", dumpDict);
             BufferedInputStream bis = new BufferedInputStream(this.getContext().getContentResolver().openInputStream(Uri.parse(path)));
-            implementation.uploadFile(bis,
-                    url,
-                    headers,
-                    new UploadFileResultCallback() {
-                        @Override
-                        public void success() {
-                            call.resolve();
-                        }
-                        @Override
-                        public void progress(Double percentage) {
-                            JSObject ret = new JSObject();
-                            ret.put("percentage", percentage);
-                            notifyListeners("uploadProgressChanged", ret);
-                        }
-                        @Override
-                        public void error(String message) {
-                            call.reject(message);
-                        }
+            implementation.uploadFile(
+                bis,
+                url,
+                headers,
+                new UploadFileResultCallback() {
+                    @Override
+                    public void success() {
+                        call.resolve();
                     }
+
+                    @Override
+                    public void progress(Double percentage) {
+                        JSObject ret = new JSObject();
+                        ret.put("percentage", percentage);
+                        notifyListeners("uploadProgressChanged", ret);
+                    }
+
+                    @Override
+                    public void error(String message) {
+                        call.reject(message);
+                    }
+                }
             );
-        }
-        catch (Exception exception) {
+        } catch (Exception exception) {
             call.reject(exception.getMessage());
             Logger.error(TAG, exception.getMessage(), exception);
         }

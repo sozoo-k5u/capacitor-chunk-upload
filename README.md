@@ -58,7 +58,7 @@ Upload a file via chunk
 ### addListener('uploadStarted', ...)
 
 ```typescript
-addListener(eventName: 'uploadStarted', listenerFunc: () => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'uploadStarted', listenerFunc: () => void) => Promise<PluginListenerHandle>
 ```
 
 Listens for event: upload started
@@ -68,7 +68,7 @@ Listens for event: upload started
 | **`eventName`**    | <code>'uploadStarted'</code> |
 | **`listenerFunc`** | <code>() =&gt; void</code>   |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 --------------------
 
@@ -76,7 +76,7 @@ Listens for event: upload started
 ### addListener('uploadProgressChanged', ...)
 
 ```typescript
-addListener(eventName: 'uploadProgressChanged', listenerFunc: (progress: { percentage: number; }) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'uploadProgressChanged', listenerFunc: (progress: { percentage: number; }) => void) => Promise<PluginListenerHandle>
 ```
 
 Listens for event: upload progress changed
@@ -86,7 +86,7 @@ Listens for event: upload progress changed
 | **`eventName`**    | <code>'uploadProgressChanged'</code>                        |
 | **`listenerFunc`** | <code>(progress: { percentage: number; }) =&gt; void</code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 --------------------
 

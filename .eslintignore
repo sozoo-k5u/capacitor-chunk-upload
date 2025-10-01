@@ -1,0 +1,31 @@
+# Build directories
+dist/
+android/build/
+android/.gradle/
+ios/build/
+node_modules/
+
+# Example directory (has different linting rules)
+example/
+
+# Generated files
+*.min.js
+
+# Test reports and coverage
+coverage/
+**/build/reports/
+**/build/test-results/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
